@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="User" table="hibernate">
+        <id name="id" type="int">
+            <user name="id" />
+            <generator class="identity" />
+        </id>
+        <property name="name" type="string">
+            <user name="name" length="45" not-null="true" />
+        </property>
+        <property name="lname" type="string">
+            <user name="lname" length="45" not-null="true" />
+        </property>
+        <property name="age" type="int">
+            <user name="age" length="11" not-null="true" />
+        </property>
+        <property name="date" user="date"/>
+
+    </class>
+</hibernate-mapping>
