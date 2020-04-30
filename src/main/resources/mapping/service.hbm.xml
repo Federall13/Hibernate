@@ -4,19 +4,19 @@
 <hibernate-mapping>
     <class name="User" table="hibernate">
         <id name="id" type="int">
-            <user name="id" />
+            <column name="id" />
             <generator class="identity" />
         </id>
         <property name="name" type="string">
-            <user name="name" length="45" not-null="true" />
+            <column name="name" length="45" not-null="true" />
         </property>
         <property name="lname" type="string">
-            <user name="lname" length="45" not-null="true" />
+            <column name="lname" length="45" not-null="true" />
         </property>
         <property name="age" type="int">
-            <user name="age" length="11" not-null="true" />
+            <column name="age" length="11" not-null="true" />
         </property>
-        <property name="date" user="date"/>
+        <property name="date" column="date"/>
 
     </class>
 </hibernate-mapping>

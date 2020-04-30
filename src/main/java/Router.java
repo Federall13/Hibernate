@@ -11,7 +11,6 @@ public class Router {
 
     public static void route() throws IOException, SQLException, ParseException {
         UserService userService = new UserService();
-
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         String choice;
         do {

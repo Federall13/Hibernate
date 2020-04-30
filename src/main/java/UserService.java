@@ -3,6 +3,8 @@ import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 
+import javax.jws.soap.SOAPBinding;
+import javax.persistence.criteria.CriteriaBuilder;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -72,11 +74,10 @@ public class UserService {
         Session session = HibernateUtil.getSessionFactory().openSession();
         try {
             session.beginTransaction();
-            User user = new User();
             System.out.println("Введите номер пользователя которого хотите удалить");
-            user.setId(Integer.parseInt(reader.readLine()));
-            User user1 = (User) session.get(User.class, user.getId());
-            session.delete(user1);
+            int remove = Integer.parseInt(reader.readLine());
+            User user = (User) session.get(User.class, remove);
+            session.delete(user);
             session.getTransaction().commit();
             HibernateUtil.shutdown();
         } catch (HibernateException e) {
@@ -85,15 +86,24 @@ public class UserService {
         }
     }
 
-    public void printAllUser() throws SQLException, ParseException {
+    public void printAllUser()  {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
-        User user = new User();
         Criteria criteria = session.createCriteria(User.class);
-        List<User> list = criteria.list();
-        for (User s : list)
+        List<User> userList = criteria.list();
+        for (User s : userList)
             System.out.println(s);
         session.getTransaction().commit();
         HibernateUtil.shutdown();
     }
+
+//    private String SqlConvector (String javaDate) throws ParseException {
+//        java.util.Date javaDat = new SimpleDateFormat(SIMPLE_DATE_FORMAT_PATTERN).parse(javaDate);
+//        Calendar calendar = Calendar.getInstance();
+//        calendar.setTime(javaDat);
+//        calendar.add(Calendar.DATE, 1);
+//        javaDat = calendar.getTime();
+//        java.sql.Date sqlDate = new java.sql.Date(javaDat.getTime());
+//       return javaDat.setDate(sqlDate);
+//    }
 }
