@@ -3,12 +3,10 @@ import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 
-import javax.jws.soap.SOAPBinding;
-import javax.persistence.criteria.CriteriaBuilder;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.sql.*;
+import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -30,13 +28,7 @@ public class UserService {
         user.setAge(Integer.parseInt(reader.readLine()));
         System.out.println("Введите дату рождения в формате: " + SIMPLE_DATE_FORMAT_PATTERN);
         String stringDate = reader.readLine();
-        java.util.Date javaDate = new SimpleDateFormat(SIMPLE_DATE_FORMAT_PATTERN).parse(stringDate);
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(javaDate);
-        calendar.add(Calendar.DATE, 1);
-        javaDate = calendar.getTime();
-        java.sql.Date sqlDate = new java.sql.Date(javaDate.getTime());
-        user.setDate(sqlDate);
+        SqlConvector(stringDate);
         session.save(user);
         session.getTransaction().commit();
         HibernateUtil.shutdown();
@@ -57,13 +49,7 @@ public class UserService {
         user.setAge(Integer.parseInt(reader.readLine()));
         System.out.println("Введите дату рождения в формате: " + SIMPLE_DATE_FORMAT_PATTERN);
         String stringDate = reader.readLine();
-        java.util.Date javaDate = new SimpleDateFormat(SIMPLE_DATE_FORMAT_PATTERN).parse(stringDate);
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(javaDate);
-        calendar.add(Calendar.DATE, 1);
-        javaDate = calendar.getTime();
-        java.sql.Date sqlDate = new java.sql.Date(javaDate.getTime());
-        user.setDate(sqlDate);
+        SqlConvector(stringDate);
         session.saveOrUpdate(user);
         session.getTransaction().commit();
         HibernateUtil.shutdown();
@@ -97,13 +83,13 @@ public class UserService {
         HibernateUtil.shutdown();
     }
 
-//    private String SqlConvector (String javaDate) throws ParseException {
-//        java.util.Date javaDat = new SimpleDateFormat(SIMPLE_DATE_FORMAT_PATTERN).parse(javaDate);
-//        Calendar calendar = Calendar.getInstance();
-//        calendar.setTime(javaDat);
-//        calendar.add(Calendar.DATE, 1);
-//        javaDat = calendar.getTime();
-//        java.sql.Date sqlDate = new java.sql.Date(javaDat.getTime());
-//       return javaDat.setDate(sqlDate);
-//    }
+    private Date SqlConvector (String javaDate) throws ParseException {
+        java.util.Date javaDat = new SimpleDateFormat(SIMPLE_DATE_FORMAT_PATTERN).parse(javaDate);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(javaDat);
+        calendar.add(Calendar.DATE, 1);
+        javaDat = calendar.getTime();
+        java.sql.Date sqlDate = new java.sql.Date(javaDat.getTime());
+        return sqlDate;
+    }
 }
