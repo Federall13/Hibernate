@@ -28,7 +28,7 @@ public class UserService {
         user.setAge(Integer.parseInt(reader.readLine()));
         System.out.println("Введите дату рождения в формате: " + SIMPLE_DATE_FORMAT_PATTERN);
         String stringDate = reader.readLine();
-        SqlConvector(stringDate);
+        user.setDate(convertToSqlDate(stringDate));
         session.save(user);
         session.getTransaction().commit();
         HibernateUtil.shutdown();
@@ -49,7 +49,7 @@ public class UserService {
         user.setAge(Integer.parseInt(reader.readLine()));
         System.out.println("Введите дату рождения в формате: " + SIMPLE_DATE_FORMAT_PATTERN);
         String stringDate = reader.readLine();
-        SqlConvector(stringDate);
+        user.setDate(convertToSqlDate(stringDate));
         session.saveOrUpdate(user);
         session.getTransaction().commit();
         HibernateUtil.shutdown();
@@ -61,8 +61,8 @@ public class UserService {
         try {
             session.beginTransaction();
             System.out.println("Введите номер пользователя которого хотите удалить");
-            int User = Integer.parseInt(reader.readLine());
-            User user = (User) session.get(User.class, User);
+            int idUser = Integer.parseInt(reader.readLine());
+            User user = (User) session.get(User.class, idUser);
             session.delete(user);
             session.getTransaction().commit();
             HibernateUtil.shutdown();
@@ -83,7 +83,7 @@ public class UserService {
         HibernateUtil.shutdown();
     }
 
-    private Date SqlConvector (String javaDate) throws ParseException {
+    private Date convertToSqlDate (String javaDate) throws ParseException {
         java.util.Date javaDat = new SimpleDateFormat(SIMPLE_DATE_FORMAT_PATTERN).parse(javaDate);
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(javaDat);
