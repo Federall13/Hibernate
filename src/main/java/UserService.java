@@ -61,8 +61,8 @@ public class UserService {
         try {
             session.beginTransaction();
             System.out.println("Введите номер пользователя которого хотите удалить");
-            int remove = Integer.parseInt(reader.readLine());
-            User user = (User) session.get(User.class, remove);
+            int User = Integer.parseInt(reader.readLine());
+            User user = (User) session.get(User.class, User);
             session.delete(user);
             session.getTransaction().commit();
             HibernateUtil.shutdown();
